@@ -163,12 +163,33 @@ public extension UIView.Layout {
             .preparedForDisplay()
     }
 
+    @discardableResult
     func centerVerticallyInSuperView() -> NSLayoutConstraint? {
         guard let superview = view.superview else { return nil }
 
         return view.centerYAnchor
             .constraint(equalTo: superview.centerYAnchor)
             .preparedForDisplay()
+    }
+    
+    @discardableResult
+    func centerHorizontallyInSuperView() -> NSLayoutConstraint? {
+        guard let superview = view.superview else { return nil }
+
+        return view.centerXAnchor
+            .constraint(equalTo: superview.centerXAnchor)
+            .preparedForDisplay()
+    }
+    
+    @discardableResult
+    func centerInSuperView() -> [NSLayoutConstraint] {
+        [
+            centerHorizontallyInSuperView(),
+            centerVerticallyInSuperView()
+        ]
+            .compactMap {
+                $0
+            }
     }
 }
 
