@@ -17,8 +17,7 @@ public extension NSLayoutConstraint {
 
     @discardableResult
     func with(multiplier: CGFloat) -> NSLayoutConstraint {
-        isActive = false
-        shouldBeArchived = true
+        archived()
         return .init(
             item: firstItem as Any,
             attribute: firstAttribute,
@@ -33,8 +32,7 @@ public extension NSLayoutConstraint {
     
     @discardableResult
     func with(relation: Relation) -> NSLayoutConstraint {
-        isActive = false
-        shouldBeArchived = true
+        archived()
         return .init(
             item: firstItem as Any,
             attribute: firstAttribute,
@@ -47,6 +45,13 @@ public extension NSLayoutConstraint {
         .activated()
     }
 
+    @discardableResult
+    func archived() -> NSLayoutConstraint {
+        shouldBeArchived = true
+        isActive = true
+        return self
+    }
+    
     @discardableResult
     func activated() -> NSLayoutConstraint {
         isActive = true
