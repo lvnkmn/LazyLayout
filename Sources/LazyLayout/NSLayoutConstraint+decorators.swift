@@ -18,21 +18,21 @@ public extension NSLayoutConstraint {
     @discardableResult
     func with(multiplier: CGFloat) -> NSLayoutConstraint {
         deactivated()
-
-        let newConstraint = NSLayoutConstraint(
-            item: firstItem as Any ,
-            attribute: firstAttribute,
-            relatedBy: relation,
-            toItem: secondItem,
-            attribute: secondAttribute,
-            multiplier: multiplier,
-            constant: constant)
-
-        newConstraint.priority = priority
-        newConstraint.shouldBeArchived = self.shouldBeArchived
-        newConstraint.identifier = self.identifier
-
-        return newConstraint.activated()
+            .map {
+                NSLayoutConstraint(
+                    item: $0.firstItem as Any ,
+                    attribute: $0.firstAttribute,
+                    relatedBy: $0.relation,
+                    toItem: $0.secondItem,
+                    attribute: $0.secondAttribute,
+                    multiplier: multiplier,
+                    constant: $0.constant
+                )
+            }
+            .setting(priority: priority)
+            .setting(identifier: identifier)
+            .setting(shouldBeArchived: shouldBeArchived)
+            .activated()
     }
     
     @discardableResult
@@ -53,7 +53,7 @@ public extension NSLayoutConstraint {
     @discardableResult
     func archived() -> NSLayoutConstraint {
         shouldBeArchived = true
-        isActive = true
+        deactivated()
         return self
     }
     
@@ -72,6 +72,24 @@ public extension NSLayoutConstraint {
     @discardableResult
     func preparedForDisplay() -> NSLayoutConstraint {
         deactivatedAutoResizingMasks().activated()
+    }
+    
+    @discardableResult
+    func setting(priority: UILayoutPriority) -> NSLayoutConstraint {
+        self.priority = priority
+        return self
+    }
+    
+    @discardableResult
+    func setting(shouldBeArchived: Bool) -> NSLayoutConstraint {
+        self.shouldBeArchived = shouldBeArchived
+        return self
+    }
+    
+    @discardableResult
+    func setting(identifier: String?) -> NSLayoutConstraint {
+        self.identifier = identifier
+        return self
     }
 }
 
