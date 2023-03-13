@@ -87,26 +87,23 @@ public extension UIView.Layout {
     @discardableResult
     func pin(
         toEdge edge: Edge,
-        of constrainable: LayoutConstrainable? = nil
+        of constrainable: LayoutConstrainable? = nil,
+        withRelation relation: NSLayoutConstraint.Relation = .equal,
+        multiplier: CGFloat = 1,
+        constant: CGFloat = 0
     ) -> NSLayoutConstraint? {
         guard let constrainable = constrainable ?? view.superview else { return nil }
-        if
-            let viewXAnchor = view.xAxisAnchors[edge],
-            let constrainableXAsisAnchor = constrainable.xAxisAnchors[edge] {
 
-            return viewXAnchor.constraint(equalTo: constrainableXAsisAnchor)
-                .preparedForDisplay()
-        }
-
-        if
-            let viewYAnchor = view.yAxisAnchors[edge],
-            let constrainableYAxisAnchor = constrainable.yAxisAnchors[edge] {
-
-            return viewYAnchor.constraint(equalTo: constrainableYAxisAnchor)
-                .preparedForDisplay()
-        }
-
-        return nil
+        return .init(
+            item: view,
+            attribute: edge.attribute,
+            relatedBy: relation,
+            toItem: constrainable,
+            attribute: edge.attribute,
+            multiplier: multiplier,
+            constant: constant
+        )
+        .preparedForDisplay()
     }
     
     @discardableResult

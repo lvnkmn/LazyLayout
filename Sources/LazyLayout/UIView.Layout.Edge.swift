@@ -15,6 +15,22 @@ public extension UIView.Layout {
 }
 
 extension UIView.Layout.Edge {
+    
+    var attribute: NSLayoutConstraint.Attribute {
+        switch self {
+        case .top:
+            return .top
+        case .right:
+            return .right
+        case .bottom:
+            return .bottom
+        case .left:
+            return .left
+        }
+    }
+}
+
+extension UIView.Layout.Edge {
 
     var axis: NSLayoutConstraint.Axis {
         switch self {

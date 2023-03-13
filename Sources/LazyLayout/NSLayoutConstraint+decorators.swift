@@ -36,21 +36,6 @@ public extension NSLayoutConstraint {
     }
     
     @discardableResult
-    func with(relation: Relation) -> NSLayoutConstraint {
-        archived()
-        return .init(
-            item: firstItem as Any,
-            attribute: firstAttribute,
-            relatedBy: relation,
-            toItem: secondItem,
-            attribute: secondAttribute,
-            multiplier: multiplier,
-            constant: constant
-        )
-        .activated()
-    }
-
-    @discardableResult
     func archived() -> NSLayoutConstraint {
         shouldBeArchived = true
         deactivated()
