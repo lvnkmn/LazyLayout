@@ -111,12 +111,13 @@ public extension UIView.Layout {
     func pin(
         toEdges edges: [Edge] = .all,
         of constrainable: LayoutConstrainable? = nil,
-        withPadding padding: UIEdgeInsets = .zero
+        withPadding padding: UIEdgeInsets = .zero,
+        shouldConsiderMargin: Bool = true
     ) -> [NSLayoutConstraint] {
         (constrainable ?? view.superview)
             .map { constrainable in
                 edges.compactMap { edge in
-                    pin(toEdge: edge, of: constrainable)?
+                    pin(toEdge: edge, of: constrainable, shouldConsiderMargin: shouldConsiderMargin)?
                         .with(constant: padding.value(forEdge: edge))
                 }
         } ?? []
