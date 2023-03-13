@@ -16,16 +16,16 @@ public extension UIView.Layout {
 
 extension UIView.Layout.Edge {
     
-    var attribute: NSLayoutConstraint.Attribute {
+    func attribute(shouldConsiderMargin: Bool) -> NSLayoutConstraint.Attribute {
         switch self {
         case .top:
-            return .top
+            return shouldConsiderMargin ? .topMargin : .top
         case .right:
-            return .right
+            return shouldConsiderMargin ? .rightMargin : .right
         case .bottom:
-            return .bottom
+            return shouldConsiderMargin ? .bottomMargin : .bottom
         case .left:
-            return .left
+            return shouldConsiderMargin ? .leftMargin : .left
         }
     }
 }

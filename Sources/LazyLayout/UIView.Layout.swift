@@ -90,16 +90,17 @@ public extension UIView.Layout {
         of constrainable: LayoutConstrainable? = nil,
         withRelation relation: NSLayoutConstraint.Relation = .equal,
         multiplier: CGFloat = 1,
-        constant: CGFloat = 0
+        constant: CGFloat = 0,
+        shouldConsiderMargin: Bool = true
     ) -> NSLayoutConstraint? {
         guard let constrainable = constrainable ?? view.superview else { return nil }
 
         return .init(
             item: view,
-            attribute: edge.attribute,
+            attribute: edge.attribute(shouldConsiderMargin: shouldConsiderMargin),
             relatedBy: relation,
             toItem: constrainable,
-            attribute: edge.attribute,
+            attribute: edge.attribute(shouldConsiderMargin: shouldConsiderMargin),
             multiplier: multiplier,
             constant: constant
         )
